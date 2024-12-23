@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace GeezDate\GeezDate\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class GeezDateCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'geezdate';
 
     public $description = 'My command';
 
