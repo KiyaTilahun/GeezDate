@@ -2,7 +2,8 @@
 
 namespace GeezDate\GeezDate;
 
-class GeezDate {
+class GeezDate
+{
 
     public  $geezNumbers;
 
@@ -11,41 +12,90 @@ class GeezDate {
         $jsonFile = realpath(__DIR__ . '/../resources/jsons/geez.json');
         $this->geezNumbers = json_decode(file_get_contents($jsonFile), true);
     }
-    public  function hello($number)  {
+    public  function hello($number)
+    {
+
         $geezNumber = '';
-        if($number<=1000){
-        $number = strval($number);
-        $geezNumber=$this->geezNumbers['numbers'][$number];
-        return  $geezNumber;
+        if ($number <= 1000) {
+            $number = strval($number);
+            $geezNumber = $this->geezNumbers['numbers'][$number];
+            return  $geezNumber;
+        } else if ($number > 1000 && $number < 10000) {
+            return $this->hundredMultiplier($number);
+        } else if ($number >= 10000 && $number <= 100000) {
+            return $this->thousandMultiplier($number);
+        } else if ($number > 100000) {
+            $result = '';
 
-        }
-        else if($number>1000 && $number<10000){
-        return $this->hundredMultiplier($number);
-        }
+            $tenthnumber = intdiv($number, 10000);
+            $thousandth = $number % 10000;
+            $backnumber = $this->hundredMultiplier($thousandth);
+            if ($tenthnumber < 10000) {
+                $frontnumber = $this->hundredMultiplier($tenthnumber);
+                return $frontnumber . $this->geezNumbers['multiplier']["1000"] . $backnumber;
+            } else {
 
-        else if($number>=10000 && $number<=100000){
-            if($number%10000==0){
-                $frontnumber = strval(intdiv($number, 10000));
-                return $this->geezNumbers['numbers'][$frontnumber].$this->geezNumbers['multiplier']["1000"];
+                if($tenthnumber>10000 && $tenthnumber<100000 ) {
+                    $frontnumber=$this->thousandMultiplier($tenthnumber);
+                    return $frontnumber . $this->geezNumbers['multiplier']["1000"] . $backnumber;
+                     }
+                else  {
+
+                    $backnumber = [];
+                    while ($tenthnumber > 100000) {
+
+                        $thousandth = $tenthnumber % 10000;
+                        if($tenthnumber>10000 && $tenthnumber<100000 ) {
+                            $newfront=$this->thousandMultiplier($tenthnumber);
+                            $frontnumber =$newfront . $this->geezNumbers['multiplier']["1000"] . $this->hundredMultiplier($thousandth);
+                            return $frontnumber . $this->geezNumbers['multiplier']["1000"] . $backnumber;
+
+                         }
+                         else{
+                            $backnumber[]= $this->hundredMultiplier($thousandth);
+                            $tenthnumber=intdiv($tenthnumber, 10000);
+                            // dd($tenthnumber);
+                         }
+
+
+
+                    }
+                }
+
             }
-              $frontnumber = strval(intdiv($number, 10000));
-             $this->geezNumbers['numbers'][$frontnumber].$this->geezNumbers['multiplier']["1000"];
-            $backnumber = $number%10000;
-          return $this->geezNumbers['numbers'][$frontnumber].$this->geezNumbers['multiplier']["1000"].$this->hundredMultiplier($backnumber);
         }
     }
 
 
 
 
-    public function hundredMultiplier($number)  {
-        if($number%10==0 && $number<100   ){
-            // dd($number);
-           return $this->geezNumbers['numbers'][$number];
+
+    public function hundredMultiplier($number)
+    {
+        if ($number % 10 == 0 && $number < 100) {
+            return $this->geezNumbers['numbers'][$number];
         }
-        $backnumber=strval($number%100);
+        if ($number % 1000 == 0) {
+            $frontnumber = strval(intdiv($number, 100));
+            return $this->geezNumbers['numbers'][$frontnumber] . $this->geezNumbers['multiplier']["100"];
+        }
+        $backnumber = strval($number % 100);
         $frontnumber = strval(intdiv($number, 100));
-        // dd($number);
-      return $this->geezNumbers['numbers'][$frontnumber].$this->geezNumbers['multiplier']["100"]. $this->geezNumbers['numbers'][$backnumber];
+        if ($backnumber == 0) {
+            return $this->geezNumbers['numbers'][$frontnumber] . $this->geezNumbers['multiplier']["100"];
+        } else {
+            return $this->geezNumbers['numbers'][$frontnumber] . $this->geezNumbers['multiplier']["100"] . $this->geezNumbers['numbers'][$backnumber];
+        }
+    }
+
+    public function thousandMultiplier($number)
+    {
+        if ($number % 10000 == 0) {
+            $frontnumber = strval(intdiv($number, 10000));
+            return $this->geezNumbers['numbers'][$frontnumber] . $this->geezNumbers['multiplier']["1000"];
+        }
+        $frontnumber = strval(intdiv($number, 10000));
+        $backnumber = $number % 10000;
+        return $this->geezNumbers['numbers'][$frontnumber] . $this->geezNumbers['multiplier']["1000"] . $this->hundredMultiplier($backnumber);
     }
 }
