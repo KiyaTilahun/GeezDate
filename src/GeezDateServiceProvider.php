@@ -2,9 +2,9 @@
 
 namespace GeezDate\GeezDate;
 
+use GeezDate\GeezDate\Commands\GeezDateCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use GeezDate\GeezDate\Commands\GeezDateCommand;
 
 class GeezDateServiceProvider extends PackageServiceProvider
 {

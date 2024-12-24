@@ -2,9 +2,9 @@
 
 namespace GeezDate\GeezDate\Tests;
 
+use GeezDate\GeezDate\GeezDateServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use GeezDate\GeezDate\GeezDateServiceProvider;
 
 class TestCase extends Orchestra
 {
