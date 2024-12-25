@@ -5,7 +5,9 @@ namespace GeezDate\GeezDate\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static string hello() This is the correct method annotation
+ * 
+ * @method static string convertDateToGeez(string $date)
+ * @method static string changeNumber(string $number)
  * @see \GeezDate\GeezDate\GeezDate
  */
 class GeezDate extends Facade
