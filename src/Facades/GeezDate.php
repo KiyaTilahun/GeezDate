@@ -5,7 +5,7 @@ namespace GeezDate\GeezDate\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static string convertDatetoGeez(string $date)
+ * @method static string changeDatetoGeez(string $date)
  * @method static string changeNumber(string $number)
  *
  * @see \GeezDate\GeezDate\GeezDate
