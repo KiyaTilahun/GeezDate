@@ -12,9 +12,36 @@ class GeezDate
         $this->geezNumbers = json_decode(file_get_contents($jsonFile), true);
     }
 
-    public function hello($number)
+    public function changeDatetoGeez($date)
     {
 
+        $dateParts = explode('-', $date);
+
+        if (count($dateParts) != 3) {
+            throw new \Exception('Invalid date format. Please use YYYY-MM-DD.');
+        }
+
+        $year = ltrim($dateParts[0], '0');
+        $month = ltrim($dateParts[1], '0');
+        $day = ltrim($dateParts[2], '0');
+        if ($month < 1 || $month > 13) {
+            throw new \Exception('Invalid month. Please use a month between 1 and 12.');
+        }
+
+        if ($day < 1 || $day > 31) {
+            throw new \Exception('Invalid day. Please use a valid day for the given month.');
+        }
+
+        $geezYear = $this->changeNumber($year);
+        $geezMonth = $this->changeNumber($month);
+        $geezDay = $this->changeNumber($day);
+
+        return $geezYear.'-'.$geezMonth.'-'.$geezDay;
+    }
+
+    public function changeNumber(string $number)
+    {
+        $number = (int) $number;
         $geezNumber = '';
         if ($number <= 1000) {
             $number = strval($number);
@@ -22,48 +49,15 @@ class GeezDate
 
             return $geezNumber;
         } elseif ($number > 1000 && $number < 10000) {
+
             return $this->hundredMultiplier($number);
+
         } elseif ($number >= 10000 && $number <= 100000) {
             return $this->thousandMultiplier($number);
-        } elseif ($number > 100000) {
-            $result = '';
-
-            $tenthnumber = intdiv($number, 10000);
-            $thousandth = $number % 10000;
-            $backnumber = $this->hundredMultiplier($thousandth);
-            if ($tenthnumber < 10000) {
-                $frontnumber = $this->hundredMultiplier($tenthnumber);
-
-                return $frontnumber.$this->geezNumbers['multiplier']['1000'].$backnumber;
-            } else {
-
-                if ($tenthnumber > 10000 && $tenthnumber < 100000) {
-                    $frontnumber = $this->thousandMultiplier($tenthnumber);
-
-                    return $frontnumber.$this->geezNumbers['multiplier']['1000'].$backnumber;
-                } else {
-
-                    $backnumber = [];
-                    while ($tenthnumber > 100000) {
-
-                        $thousandth = $tenthnumber % 10000;
-                        if ($tenthnumber > 10000 && $tenthnumber < 100000) {
-                            $newfront = $this->thousandMultiplier($tenthnumber);
-                            $frontnumber = $newfront.$this->geezNumbers['multiplier']['1000'].$this->hundredMultiplier($thousandth);
-
-                            return $frontnumber.$this->geezNumbers['multiplier']['1000'].$backnumber;
-
-                        } else {
-                            $backnumber[] = $this->hundredMultiplier($thousandth);
-                            $tenthnumber = intdiv($tenthnumber, 10000);
-                            // dd($tenthnumber);
-                        }
-
-                    }
-                }
-
-            }
+        } else {
+            return throw new \Exception('Please use a number from 1-100,000');
         }
+
     }
 
     public function hundredMultiplier($number)
