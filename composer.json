@@ -1,12 +1,12 @@
 {
-    "name": "98279891-kiyatilahun/geezdate",
+    "name": "kiyatilahun/geezdate",
     "description": "GeezDate is a lightweight and efficient Laravel package that seamlessly converts standard Gregorian dates into the traditional Ethiopian (Geez) calendar format.",
     "keywords": [
         "GeezDate",
         "laravel",
         "geezdate"
     ],
-    "homepage": "https://github.com/98279891-kiyatilahun/geezdate",
+    "homepage": "https://github.com/kiyatilahun/geezdate",
     "license": "MIT",
     "authors": [
         {

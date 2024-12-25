@@ -1,4 +1,4 @@
-# GeezDate is a lightweight and efficient Laravel package that seamlessly converts standard Gregorian dates into the traditional Ethiopian (Geez) calendar format.
+# GeezDate is a lightweight and efficient Laravel package that seamlessly converts standard Gregorian dates into the traditional Ethiopian (Geez)  format(N.B. it does not change it to Ethiopian Calendar Date).
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/98279891-kiyatilahun/geezdate.svg?style=flat-square)](https://packagist.org/packages/98279891-kiyatilahun/geezdate)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/98279891-kiyatilahun/geezdate/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/98279891-kiyatilahun/geezdate/actions?query=workflow%3Arun-tests+branch%3Amain)
@@ -20,47 +20,30 @@ We highly appreciate you sending us a postcard from your hometown, mentioning wh
 You can install the package via composer:
 
 ```bash
-composer require 98279891-kiyatilahun/geezdate
+composer require kiyatilahun/geezdate
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="geezdate-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="geezdate-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="geezdate-views"
-```
 
 ## Usage
-
+To change a number from 1-100000 
 ```php
-$geezDate = new GeezDate\GeezDate();
-echo $geezDate->echoPhrase('Hello, GeezDate!');
+GeezDate::changeNumber($number);
+```
+example
+```php
+GeezDate::changeNumber(13); //will return '፲፫'
 ```
 
-## Testing
-
-```bash
-composer test
+To change a date  to be in Geez
+```php
+GeezDate::convertToEthiopianDate($date); //in YYYY-MM-DD format only
 ```
+example
+```php
+GeezDate::convertToEthiopianDate('2024-12-25'); //will return ፳፻፳፬-፲፪-፳፭
+
+```
+
 
 ## Changelog
 
@@ -76,7 +59,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [kiyatilahun](https://github.com/98279891+KiyaTilahun)
+- [kiyatilahun](https://github.com/KiyaTilahun)
 - [All Contributors](../../contributors)
 
 ## License
