@@ -2,6 +2,7 @@
 
 namespace GeezDate\GeezDate;
 
+use DateTime;
 use phpDocumentor\Reflection\DocBlock\Tags\Throws;
 
 class GeezDate
@@ -94,4 +95,10 @@ class GeezDate
         $backnumber = $number % 10000;
         return $this->geezNumbers['numbers'][$frontnumber] . $this->geezNumbers['multiplier']["1000"] . $this->hundredMultiplier($backnumber);
     }
+    function convertToEthiopianDate($gregorianDate) {
+      
+    }
+
+
+
 }
